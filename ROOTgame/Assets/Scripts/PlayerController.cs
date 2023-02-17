@@ -161,5 +161,10 @@ public class PlayerController : MonoBehaviour
         {
             levelController.NextStage();
         }
+        if(collision.collider.CompareTag("Bullet"))
+        {
+            Destroy(collision.collider.gameObject);
+            levelController.DeadgeScreen();
+        }
     }
 }

@@ -6,12 +6,15 @@ using UnityEngine.SceneManagement;
 public class LevelController : MonoBehaviour
 {
     public int currentLevel = 1;
-    int maxLevel = 8;
+    int maxLevel = 9;
     public GameObject backgroundObject;
     public Sprite[] spriteList;
     public GameObject doorObject;
-    public int numberOfFiles;
+    int numberOfFiles;
     int currentNumberOfFiles = 0;
+    bool turretPresent = false;
+    [System.NonSerialized] public int enemiesRemaining;
+    Collider2D[] objectsInLevel;
     public AudioSource crunchSound;
     public PlayerController playerController;
     bool pauseCondition = false;
@@ -19,7 +22,40 @@ public class LevelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        enemiesRemaining = -1;
+
+        numberOfFiles = 0;
+
         backgroundObject.GetComponent<SpriteRenderer>().sprite = spriteList[Random.Range(0, spriteList.Length)];
+
+        objectsInLevel = Physics2D.OverlapCircleAll(Vector2.zero, 100f);
+
+        foreach (Collider2D obj in objectsInLevel) {
+
+            if(obj.gameObject.CompareTag("Enemy")) {
+
+                enemiesRemaining++;
+
+            }
+
+            if(obj.gameObject.CompareTag("Turret")) {
+
+                turretPresent = true;
+
+            }
+
+            if(obj.gameObject.CompareTag("File")) {
+
+                numberOfFiles++;
+
+            }
+
+        }
+
+        currentNumberOfFiles = 0;
+
+        
     }
 
     // Update is called once per frame
@@ -29,9 +65,20 @@ public class LevelController : MonoBehaviour
         {
             TogglePauseGame();
         }
-        if (currentNumberOfFiles >= numberOfFiles)
+        if (!turretPresent)
         {
-            openDoor();
+
+            if(currentNumberOfFiles >= numberOfFiles)
+                openDoor();
+
+        } else {
+
+            // Debug.Log("Files: " + currentNumberOfFiles);
+
+            // Debug.Log("Enemies " + enemiesRemaining);
+
+            if((currentNumberOfFiles >= numberOfFiles) && (enemiesRemaining == 0))
+                openDoor();
         }
     }
 

@@ -6,15 +6,25 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     AIPath aiPath;
+    LevelController levelController;
     void Start()
     {
         aiPath = GetComponent<AIPath>();
         GetComponent<AIDestinationSetter>().target = GameObject.Find("Player").transform;
+        levelController = GameObject.Find("Level Controller").GetComponent<LevelController>();
     }
-    //void OnCollisionEnter2D(Collision2D collision)
-    //{
+    void OnCollisionEnter2D(Collision2D collision)
+    {
     //    Debug.Log("collision enter: " + collision.gameObject.name);
-    //}
+
+        if(collision.collider.CompareTag("Bullet"))
+        {
+            levelController.enemiesRemaining--;
+            Destroy(this.gameObject);
+            Destroy(collision.collider.gameObject);
+        }
+
+    }
 
     //void OnCollisionStay2D(Collision2D collision)
     //{

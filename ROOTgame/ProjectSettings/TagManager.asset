@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Stun
+  - Turret
+  - Bullet
+  - File
   layers:
   - Default
   - TransparentFX
