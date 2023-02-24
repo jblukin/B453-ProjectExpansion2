@@ -59,7 +59,7 @@ public class TurretController : MonoBehaviour
 
     IEnumerator bulletDeath(GameObject bullet) {
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2.0f);
         Destroy(bullet);
 
     }
