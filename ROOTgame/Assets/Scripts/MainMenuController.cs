@@ -8,6 +8,8 @@ public class MainMenuController : MonoBehaviour
     public GameObject TitleObject;
     public GameObject UIMenuObject;
     public GameObject CreditsPanel;
+    [SerializeField] private GameObject LevelSelectPanel;
+    [SerializeField] private GameObject LevelSelectText;
 
     void Update()
     {
@@ -27,6 +29,8 @@ public class MainMenuController : MonoBehaviour
         TitleObject.SetActive(true);
         UIMenuObject.SetActive(true);
         CreditsPanel.SetActive(false);
+        LevelSelectPanel.SetActive(false);
+        LevelSelectText.SetActive(false);
     }
 
     public void ShowCredits()
@@ -34,6 +38,26 @@ public class MainMenuController : MonoBehaviour
         TitleObject.SetActive(false);
         UIMenuObject.SetActive(false);
         CreditsPanel.SetActive(true);
+        LevelSelectPanel.SetActive(false);
+        LevelSelectText.SetActive(false);
+    }
+
+    public void ShowLevelSelectPanel()
+    {
+        TitleObject.SetActive(false);
+        UIMenuObject.SetActive(false);
+        CreditsPanel.SetActive(false);
+        LevelSelectPanel.SetActive(true);
+        LevelSelectText.SetActive(true);
+    }
+
+    public void CloseLevelSelectPanel()
+    {
+        TitleObject.SetActive(true);
+        UIMenuObject.SetActive(true);
+        CreditsPanel.SetActive(false);
+        LevelSelectPanel.SetActive(false);
+        LevelSelectText.SetActive(false);
     }
 
     public void ExitGame()

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class LevelController : MonoBehaviour
 {
     public int currentLevel = 1;
-    int maxLevel = 9;
+    int maxLevel = 12;
     public GameObject backgroundObject;
     public Sprite[] spriteList;
     public GameObject doorObject;
@@ -23,29 +23,27 @@ public class LevelController : MonoBehaviour
     void Start()
     {
 
-        enemiesRemaining = -1;
+        enemiesRemaining = 0;
 
         numberOfFiles = 0;
 
         backgroundObject.GetComponent<SpriteRenderer>().sprite = spriteList[Random.Range(0, spriteList.Length)];
 
-        objectsInLevel = Physics2D.OverlapCircleAll(Vector2.zero, 100f);
+        objectsInLevel = Physics2D.OverlapCircleAll(Vector2.zero, 50f);
 
         foreach (Collider2D obj in objectsInLevel) {
 
             if(obj.gameObject.CompareTag("Enemy")) {
 
+                Debug.Log(obj);
+
                 enemiesRemaining++;
 
-            }
-
-            if(obj.gameObject.CompareTag("Turret")) {
+            } else if(obj.gameObject.CompareTag("Turret")) {
 
                 turretPresent = true;
 
-            }
-
-            if(obj.gameObject.CompareTag("File")) {
+            } else if(obj.gameObject.CompareTag("File")) {
 
                 numberOfFiles++;
 

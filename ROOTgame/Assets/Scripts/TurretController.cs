@@ -17,10 +17,12 @@ public class TurretController : MonoBehaviour
 
     private Vector2 fireDir;
 
+    private bool _allowFire = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(AllowFire());
     }
 
     // Update is called once per frame
@@ -33,7 +35,7 @@ public class TurretController : MonoBehaviour
 
         gunBarrelRotationPoint.transform.up = -fireDir;
 
-        if(Time.time > fireRate)
+        if((Time.time > fireRate) && _allowFire)
         {
 
             fireRate = Time.time+1/0.5f;
@@ -42,9 +44,6 @@ public class TurretController : MonoBehaviour
 
         }
 
-
-        
-        
     }
 
     void Shoot() 
@@ -62,6 +61,13 @@ public class TurretController : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
         Destroy(bullet);
+
+    }
+
+    IEnumerator AllowFire() {
+
+        yield return new WaitForSeconds(1.5f);
+        _allowFire = true;
 
     }
 }
